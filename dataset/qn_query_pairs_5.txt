@@ -1,0 +1,20 @@
+Database ID: department_management
+Question: How many heads of the departments are older than 56 ?
+SQL Query: SELECT count(*) FROM head WHERE age  >  56
+
+Database ID: department_management
+Question: List the name, born state and age of the heads of departments ordered by age.
+SQL Query: SELECT name ,  born_state ,  age FROM head ORDER BY age
+
+Database ID: department_management
+Question: List the creation year, name and budget of each department.
+SQL Query: SELECT creation ,  name ,  budget_in_billions FROM department
+
+Database ID: department_management
+Question: What are the maximum and minimum budget of the departments?
+SQL Query: SELECT max(budget_in_billions) ,  min(budget_in_billions) FROM department
+
+Database ID: department_management
+Question: What is the average number of employees of the departments whose rank is between 10 and 15?
+SQL Query: SELECT avg(num_employees) FROM department WHERE ranking BETWEEN 10 AND 15
+

@@ -1,0 +1,40 @@
+Database ID: department_management
+Question: How many heads of the departments are older than 56 ?
+SQL Query: SELECT count(*) FROM head WHERE age  >  56
+
+Database ID: department_management
+Question: List the name, born state and age of the heads of departments ordered by age.
+SQL Query: SELECT name ,  born_state ,  age FROM head ORDER BY age
+
+Database ID: department_management
+Question: List the creation year, name and budget of each department.
+SQL Query: SELECT creation ,  name ,  budget_in_billions FROM department
+
+Database ID: department_management
+Question: What are the maximum and minimum budget of the departments?
+SQL Query: SELECT max(budget_in_billions) ,  min(budget_in_billions) FROM department
+
+Database ID: department_management
+Question: What is the average number of employees of the departments whose rank is between 10 and 15?
+SQL Query: SELECT avg(num_employees) FROM department WHERE ranking BETWEEN 10 AND 15
+
+Database ID: department_management
+Question: What are the names of the heads who are born outside the California state?
+SQL Query: SELECT name FROM head WHERE born_state != 'California'
+
+Database ID: department_management
+Question: What are the distinct creation years of the departments managed by a secretary born in state 'Alabama'?
+SQL Query: SELECT DISTINCT T1.creation FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id JOIN head AS T3 ON T2.head_id  =  T3.head_id WHERE T3.born_state  =  'Alabama'
+
+Database ID: department_management
+Question: What are the names of the states where at least 3 heads were born?
+SQL Query: SELECT born_state FROM head GROUP BY born_state HAVING count(*)  >=  3
+
+Database ID: department_management
+Question: In which year were most departments established?
+SQL Query: SELECT creation FROM department GROUP BY creation ORDER BY count(*) DESC LIMIT 1
+
+Database ID: department_management
+Question: Show the name and number of employees for the departments managed by heads whose temporary acting value is 'Yes'?
+SQL Query: SELECT T1.name ,  T1.num_employees FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id WHERE T2.temporary_acting  =  'Yes'
+

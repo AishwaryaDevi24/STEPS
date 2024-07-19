@@ -1,0 +1,72 @@
+[
+  {
+    "database_id": "department_management",
+    "question": "How many heads of the departments are older than 56 ?",
+    "expected_query": "select count(*) from head where age > 56",
+    "generated_query": "select count(distinct e.emp_no) from employees e join dept_manager dm on e.emp_no = dm.emp_no join employees de on dm.emp_no = de.emp_no where de.birth_date < \"1965-01-01\"",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "List the name, born state and age of the heads of departments ordered by age.",
+    "expected_query": "select name, born_state, age from head order by age",
+    "generated_query": "select name, born_state, age from heads order by age",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "List the creation year, name and budget of each department.",
+    "expected_query": "select creation, name, budget_in_billions from department",
+    "generated_query": "select extract(year from creation) as creation_year, name, budget from department",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the maximum and minimum budget of the departments?",
+    "expected_query": "select max(budget_in_billions), min(budget_in_billions) from department",
+    "generated_query": "select max(budget) as max_budget, min(budget) as min_budget from department select max(budget) as max_budget, min(budget) as min_budget from departments",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "What is the average number of employees of the departments whose rank is between 10 and 15?",
+    "expected_query": "select avg(num_employees) from department where ranking between 10 and 15",
+    "generated_query": "with ranked_departments as ( select department, count(*) as num_employees, dense_rank() over (order by count(*) desc) from employee group by department ) select avg(num_employees) from ranked_departments where dense_rank between 10 and 15",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the names of the heads who are born outside the California state?",
+    "expected_query": "select name from head where born_state!= 'california'",
+    "generated_query": "select h.name from heads h join people p on h.id = p.id where p.birth_state!= \"california\"",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the distinct creation years of the departments managed by a secretary born in state 'Alabama'?",
+    "expected_query": "select distinct t1.creation from department as t1 join management as t2 on t1.department_id = t2.department_id join head as t3 on t2.head_id = t3.head_id where t3.born_state = 'alabama'",
+    "generated_query": "select distinct d.creation_year from department d join secretary s on d.head = s.employee_id join employee e on s.employee_id = e.employee_id where e.birth_state = \"alabama\" select distinct creation_year from departments where head_id in ( select id from employees where born_state = \"alabama\" and name like \"%secretary%\" ) select distinct extract(year from d.creation) as year",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the names of the states where at least 3 heads were born?",
+    "expected_query": "select born_state from head group by born_state having count(*) >= 3",
+    "generated_query": "select birth_state from heads group by birth_state having count(*) >= 3 ``` ``` select s.state_name, count(*) as count_heads from heads h join states s on h.born_state = s.state_id group by s.state_name having count(*) >= 3 ``` ``` select birth_state from people where title = \"head\" group by birth_state having",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "In which year were most departments established?",
+    "expected_query": "select creation from department group by creation order by count(*) desc limit 1",
+    "generated_query": "select year, count(*) as num_departments from department group by year order by num_departments desc limit 1 select extract(year from creation_date) as year, count(*) as number_of_departments from departments group by extract(year from creation_date) order by number_of_departments desc select year, count(*) as num_departments",
+    "match": false
+  },
+  {
+    "database_id": "department_management",
+    "question": "Show the name and number of employees for the departments managed by heads whose temporary acting value is 'Yes'?",
+    "expected_query": "select t1.name, t1.num_employees from department as t1 join management as t2 on t1.department_id = t2.department_id where t2.temporary_acting = 'yes'",
+    "generated_query": "select d.department_name, count(e.employee_id) as num_employees from department d join employee e on d.department_id = e.department_id join head h on d.department_head = h.head_id where h.temporary_acting = \"yes\" group by d.department_name",
+    "match": false
+  }
+]
