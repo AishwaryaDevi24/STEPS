@@ -21,12 +21,12 @@ def save_pairs_to_file(pairs, output_file):
             f.write(f"Question: {question}\n")
             f.write(f"SQL Query: {query}\n\n")
 
-train_file_path = 'dataset/sample_dataset_5.json'
+train_file_path = 'dataset/sample_dataset_50_mid.json'
 
 train_data = load_spider_data(train_file_path)
 
 train_pairs = extract_question_query_pairs(train_data)
 
-save_pairs_to_file(train_pairs, 'dataset/qn_query_pairs_5.txt')
+save_pairs_to_file(train_pairs, 'dataset/qn_query_pairs_50_mid.txt')
 
 print("Question, query pairs, and db_id extracted and saved.")

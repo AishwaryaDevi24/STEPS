@@ -1,0 +1,12 @@
+
+Database ID: farm
+Question: Find the official names of cities with population bigger than 1500 or smaller than 500.
+SQL Query: SELECT Official_Name FROM city WHERE Population  >  1500 OR Population  <  500
+
+Database ID: farm
+Question: What are the official names of cities that have population over 1500 or less than 500?
+SQL Query: SELECT Official_Name FROM city WHERE Population  >  1500 OR Population  <  500
+
+Database ID: farm
+Question: Show the census ranking of cities whose status are not "Village".
+SQL Query: SELECT Census_Ranking FROM city WHERE Status !=  "Village"

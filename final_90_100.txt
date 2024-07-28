@@ -1,0 +1,40 @@
+
+
+Database ID: culture_company
+Question: Count the number of different directors.
+SQL Query: SELECT COUNT (DISTINCT director) FROM movie
+
+Database ID: culture_company
+Question: What is the title and director for the movie with highest worldwide gross in the year 2000 or before?
+SQL Query: SELECT title ,  director FROM movie WHERE YEAR  <=  2000 ORDER BY gross_worldwide DESC LIMIT 1
+
+Database ID: culture_company
+Question: Return the title and director of the movie released in the year 2000 or earlier that had the highest worldwide gross.
+SQL Query: SELECT title ,  director FROM movie WHERE YEAR  <=  2000 ORDER BY gross_worldwide DESC LIMIT 1
+
+Database ID: culture_company
+Question: Show all director names who have a movie in both year 1999 and 2000.
+SQL Query: SELECT director FROM movie WHERE YEAR  =  2000 INTERSECT SELECT director FROM movie WHERE YEAR  =  1999
+
+Database ID: culture_company
+Question: Which directors had a movie both in the year 1999 and 2000?
+SQL Query: SELECT director FROM movie WHERE YEAR  =  2000 INTERSECT SELECT director FROM movie WHERE YEAR  =  1999
+
+Database ID: culture_company
+Question: Show all director names who have a movie in the year 1999 or 2000.
+SQL Query: SELECT director FROM movie WHERE YEAR  =  1999 OR YEAR  =  2000
+Database ID: culture_company
+Question: Which directors had a movie in either 1999 or 2000?
+SQL Query: SELECT director FROM movie WHERE YEAR  =  1999 OR YEAR  =  2000
+
+Database ID: culture_company
+Question: What is the average, maximum, and minimum budget for all movies before 2000.
+SQL Query: SELECT avg(budget_million) ,  max(budget_million) ,  min(budget_million) FROM movie WHERE YEAR  <  2000
+
+Database ID: culture_company
+Question: Return the average, maximum, and minimum budgets in millions for movies made before the year 2000.
+SQL Query: SELECT avg(budget_million) ,  max(budget_million) ,  min(budget_million) FROM movie WHERE YEAR  <  2000
+
+Database ID: culture_company
+Question: List all company names with a book published by Alyson.
+SQL Query: SELECT T1.company_name FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id  =  T2.book_club_id WHERE T2.publisher  =  'Alyson'

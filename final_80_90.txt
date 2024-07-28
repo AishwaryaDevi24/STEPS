@@ -1,0 +1,40 @@
+Database ID: culture_company
+Question: List categories that have at least two books after year 1989.
+SQL Query: SELECT category FROM book_club WHERE YEAR  >  1989 GROUP BY category HAVING count(*)  >=  2
+
+Database ID: culture_company
+Question: What categories have two or more corresponding books that were made after 1989?
+SQL Query: SELECT category FROM book_club WHERE YEAR  >  1989 GROUP BY category HAVING count(*)  >=  2
+
+Database ID: culture_company
+Question: Show publishers with a book published in 1989 and a book in 1990.
+SQL Query: SELECT publisher FROM book_club WHERE YEAR  =  1989 INTERSECT SELECT publisher FROM book_club WHERE YEAR  =  1990
+
+Database ID: culture_company
+Question: What are the publishers who have published a book in both 1989 and 1990?
+SQL Query: SELECT publisher FROM book_club WHERE YEAR  =  1989 INTERSECT SELECT publisher FROM book_club WHERE YEAR  =  1990
+
+Database ID: culture_company
+Question: Show all publishers which do not have a book in 1989.
+SQL Query: SELECT publisher FROM book_club EXCEPT SELECT publisher FROM book_club WHERE YEAR  =  1989
+
+Database ID: culture_company
+Question: Which publishers did not publish a book in 1989?
+SQL Query: SELECT publisher FROM book_club EXCEPT SELECT publisher FROM book_club WHERE YEAR  =  1989
+
+Database ID: culture_company
+Question: Show all movie titles, years, and directors, ordered by budget.
+SQL Query: SELECT title ,  YEAR ,  director FROM movie ORDER BY budget_million
+
+Database ID: culture_company
+Question: What are the titles, years, and directors of all movies, ordered by budget in millions?
+SQL Query: SELECT title ,  YEAR ,  director FROM movie ORDER BY budget_million
+
+Database ID: culture_company
+Question: How many movie directors are there?
+SQL Query: SELECT COUNT (DISTINCT director) FROM movie
+
+Database ID: culture_company
+Question: What are all company names that have a corresponding movie directed in the year 1999?
+SQL Query: SELECT T2.company_name FROM movie AS T1 JOIN culture_company AS T2 ON T1.movie_id  =  T2.movie_id WHERE T1.year  =  1999
+

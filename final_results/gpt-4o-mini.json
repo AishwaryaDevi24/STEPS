@@ -1,0 +1,902 @@
+[
+  {
+    "database_id": "department_management",
+    "question": "How many heads of the departments are older than 56 ?",
+    "expected_query": "select count(*) from head where age > 56;",
+    "generated_query_without_nli": "select count(*) from head where age > 56;",
+    "generated_query_with_nli": "select count(*) from head where age > 56;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "department_management",
+    "question": "List the name, born state and age of the heads of departments ordered by age.",
+    "expected_query": "select name, born_state, age from head order by age;",
+    "generated_query_without_nli": "select h.name, h.born_state, h.age from head h join management m on h.head_id = m.head_id order by h.age;",
+    "generated_query_with_nli": "select h.name, h.born_state, h.age from head h join management m on h.head_id = m.head_id join department d on m.department_id = d.department_id order by h.age;",
+    "score_without_nli": 0.42997198879551823,
+    "score_with_nli": 0.4418696002068239
+  },
+  {
+    "database_id": "department_management",
+    "question": "List the creation year, name and budget of each department.",
+    "expected_query": "select creation, name, budget_in_billions from department;",
+    "generated_query_without_nli": "select creation, name, budget_in_billions from department;",
+    "generated_query_with_nli": "select creation, name, budget_in_billions from department;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the maximum and minimum budget of the departments?",
+    "expected_query": "select max(budget_in_billions), min(budget_in_billions) from department;",
+    "generated_query_without_nli": "select max(budget_in_billions) as max_budget, min(budget_in_billions) as min_budget from department;",
+    "generated_query_with_nli": "select max(budget_in_billions) as max_budget, min(budget_in_billions) as min_budget from department;",
+    "score_without_nli": 0.897069597069597,
+    "score_with_nli": 0.9673225223329565
+  },
+  {
+    "database_id": "department_management",
+    "question": "What is the average number of employees of the departments whose rank is between 10 and 15?",
+    "expected_query": "select avg(num_employees) from department where ranking between 10 and 15;",
+    "generated_query_without_nli": "select avg(num_employees) as average_employees from department where ranking between 10 and 15;",
+    "generated_query_with_nli": "select avg(num_employees) as average_employees from department where ranking between 10 and 15;",
+    "score_without_nli": 0.9401785714285714,
+    "score_with_nli": 0.9821566966029238
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the names of the heads who are born outside the California state?",
+    "expected_query": "select name from head where born_state!= 'california';",
+    "generated_query_without_nli": "select name from head where born_state <> 'california';",
+    "generated_query_with_nli": "select name from head where born_state <> 'california';",
+    "score_without_nli": 0.9079365079365079,
+    "score_with_nli": 0.9885055920450222
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the distinct creation years of the departments managed by a secretary born in state 'Alabama'?",
+    "expected_query": "select distinct t1.creation from department as t1 join management as t2 on t1.department_id = t2.department_id join head as t3 on t2.head_id = t3.head_id where t3.born_state = 'alabama';",
+    "generated_query_without_nli": "select distinct d.creation from department d join management m on d.department_id = m.department_id join head h on m.head_id = h.head_id where h.born_state = 'alabama' and m.temporary_acting = 'secretary';",
+    "generated_query_with_nli": "select distinct d.creation from department d join management m on d.department_id = m.department_id join head h on m.head_id = h.head_id where h.born_state = 'alabama' and m.temporary_acting = 'secretary';",
+    "score_without_nli": 0.4976730152934973,
+    "score_with_nli": 0.5303055902351892
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the names of the states where at least 3 heads were born?",
+    "expected_query": "select born_state from head group by born_state having count(*) >= 3;",
+    "generated_query_without_nli": "select born_state from head group by born_state having count(head_id) >= 3;",
+    "generated_query_with_nli": "select born_state from head group by born_state having count(head_id) >= 3;",
+    "score_without_nli": 0.9375,
+    "score_with_nli": 0.9904211010384606
+  },
+  {
+    "database_id": "department_management",
+    "question": "In which year were most departments established?",
+    "expected_query": "select creation from department group by creation order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select creation, count(*) as num_departments from department group by creation order by num_departments desc limit 1;",
+    "generated_query_with_nli": "select creation, count(*) as num_departments from department group by creation order by num_departments desc limit 1;",
+    "score_without_nli": 0.8165557889822597,
+    "score_with_nli": 0.9131441598974234
+  },
+  {
+    "database_id": "department_management",
+    "question": "Show the name and number of employees for the departments managed by heads whose temporary acting value is 'Yes'?",
+    "expected_query": "select t1.name, t1.num_employees from department as t1 join management as t2 on t1.department_id = t2.department_id where t2.temporary_acting = 'yes';",
+    "generated_query_without_nli": "select d.name, d.num_employees from department d join management m on d.department_id = m.department_id join head h on m.head_id = h.head_id where m.temporary_acting = 'yes';",
+    "generated_query_with_nli": "select d.name, d.num_employees from department d join management m on d.department_id = m.department_id join head h on m.head_id = h.head_id where m.temporary_acting = 'yes';",
+    "score_without_nli": 0.5007236643303041,
+    "score_with_nli": 0.5188830275870471
+  },
+  {
+    "database_id": "department_management",
+    "question": "How many acting statuses are there?",
+    "expected_query": "select count(distinct temporary_acting) from management;",
+    "generated_query_without_nli": "select count(distinct temporary_acting) as acting_status_count from management;",
+    "generated_query_with_nli": "select count(distinct temporary_acting) as acting_status_count from management;",
+    "score_without_nli": 0.9193413729128015,
+    "score_with_nli": 0.9934045411603463
+  },
+  {
+    "database_id": "department_management",
+    "question": "How many departments are led by heads who are not mentioned?",
+    "expected_query": "select count(*) from department where department_id not in (select department_id from management);",
+    "generated_query_without_nli": "select count(*) from department d where d.department_id not in (select m.department_id from management m);",
+    "generated_query_with_nli": "select count(*) from department d where d.department_id not in (select m.department_id from management m);",
+    "score_without_nli": 0.8833971088435374,
+    "score_with_nli": 0.923458755576512
+  },
+  {
+    "database_id": "department_management",
+    "question": "What are the distinct ages of the heads who are acting?",
+    "expected_query": "select distinct t1.age from management as t2 join head as t1 on t1.head_id = t2.head_id where t2.temporary_acting = 'yes';",
+    "generated_query_without_nli": "select distinct h.age from head h join management m on h.head_id = m.head_id where m.temporary_acting = 'yes';",
+    "generated_query_with_nli": "select distinct h.age from head h join management m on h.head_id = m.head_id where m.temporary_acting = 'yes';",
+    "score_without_nli": 0.5212353123067408,
+    "score_with_nli": 0.6123520471728383
+  },
+  {
+    "database_id": "department_management",
+    "question": "Which department has more than 1 head at a time? List the id, name and the number of heads.",
+    "expected_query": "select t1.department_id, t1.name, count(*) from management as t2 join department as t1 on t1.department_id = t2.department_id group by t1.department_id having count(*) > 1;",
+    "generated_query_without_nli": "select m.department_id, d.name, count(m.head_id) as number_of_heads from management m join department d on m.department_id = d.department_id group by m.department_id, d.name having count(m.head_id) > 1;",
+    "generated_query_with_nli": "select m.department_id, d.name, count(m.head_id) as number_of_heads from management m join department d on m.department_id = d.department_id group by m.department_id, d.name having count(m.head_id) > 1;",
+    "score_without_nli": 0.49955593348450494,
+    "score_with_nli": 0.5801613347721086
+  },
+  {
+    "database_id": "department_management",
+    "question": "Which head's name has the substring 'Ha'? List the id and name.",
+    "expected_query": "select head_id, name from head where name like '%ha%';",
+    "generated_query_without_nli": "select head_id, name from head where name like '%ha%';",
+    "generated_query_with_nli": "select head_id, name from head where name like '%ha%';",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "How many farms are there?",
+    "expected_query": "select count(*) from farm;",
+    "generated_query_without_nli": "select count(*) as number_of_farms from farm;",
+    "generated_query_with_nli": "select count(*) as number_of_farms from farm;",
+    "score_without_nli": 0.9103174603174603,
+    "score_with_nli": 0.981179205352039
+  },
+  {
+    "database_id": "farm",
+    "question": "Count the number of farms.",
+    "expected_query": "select count(*) from farm;",
+    "generated_query_without_nli": "select count(*) as numberoffarms from farm;",
+    "generated_query_with_nli": "select count(*) as numberoffarms from farm;",
+    "score_without_nli": 0.9103174603174603,
+    "score_with_nli": 0.9934434084459455
+  },
+  {
+    "database_id": "farm",
+    "question": "What is the total horses record for each farm, sorted ascending?",
+    "expected_query": "select total_horses from farm order by total_horses asc;",
+    "generated_query_without_nli": "select farm_id, total_horses from farm order by total_horses asc;",
+    "generated_query_with_nli": "select farm_id, total_horses from farm order by total_horses asc;",
+    "score_without_nli": 0.8928571428571428,
+    "score_with_nli": 0.9767487653614658
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the official names of cities that have not hosted a farm competition?",
+    "expected_query": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "generated_query_without_nli": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "generated_query_with_nli": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "List the official names of cities that have not held any competition.",
+    "expected_query": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "generated_query_without_nli": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "generated_query_with_nli": "select official_name from city where city_id not in (select host_city_id from farm_competition);",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the hosts of competitions whose theme is not \"Aliens\"?",
+    "expected_query": "select hosts from farm_competition where theme!= 'aliens';",
+    "generated_query_without_nli": "select hosts from farm_competition where theme!= 'aliens';",
+    "generated_query_with_nli": "select hosts from farm_competition where theme!= 'aliens';",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "Return the hosts of competitions for which the theme is not Aliens?",
+    "expected_query": "select hosts from farm_competition where theme!= 'aliens';",
+    "generated_query_without_nli": "select hosts from farm_competition where theme <> 'aliens';",
+    "generated_query_with_nli": "select hosts from farm_competition where theme <> 'aliens';",
+    "score_without_nli": 0.9079365079365079,
+    "score_with_nli": 0.9707135947415677
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the themes of farm competitions sorted by year in ascending order?",
+    "expected_query": "select theme from farm_competition order by year asc;",
+    "generated_query_without_nli": "select theme from farm_competition order by year asc;",
+    "generated_query_with_nli": "select theme from farm_competition order by year asc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "Return the themes of farm competitions, sorted by year ascending.",
+    "expected_query": "select theme from farm_competition order by year asc;",
+    "generated_query_without_nli": "select theme from farm_competition order by year asc;",
+    "generated_query_with_nli": "select theme from farm_competition order by year asc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "What is the average number of working horses of farms with more than 5000 total number of horses?",
+    "expected_query": "select avg(working_horses) from farm where total_horses > 5000;",
+    "generated_query_without_nli": "select avg(working_horses) as average_working_horses from farm where total_horses > 5000;",
+    "generated_query_with_nli": "select avg(working_horses) as average_working_horses from farm where total_horses > 5000;",
+    "score_without_nli": 0.9331501831501832,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "Give the average number of working horses on farms with more than 5000 total horses.",
+    "expected_query": "select avg(working_horses) from farm where total_horses > 5000;",
+    "generated_query_without_nli": "select avg(working_horses) as average_working_horses from farm where total_horses > 5000;",
+    "generated_query_with_nli": "select avg(working_horses) as average_working_horses from farm where total_horses > 5000;",
+    "score_without_nli": 0.9331501831501832,
+    "score_with_nli": 0.9682059162236343
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the maximum and minimum number of cows across all farms.",
+    "expected_query": "select max(cows), min(cows) from farm;",
+    "generated_query_without_nli": "select max(cows) as max_cows, min(cows) as min_cows from farm;",
+    "generated_query_with_nli": "select max(cows) as max_cows, min(cows) as min_cows from farm;",
+    "score_without_nli": 0.897069597069597,
+    "score_with_nli": 0.9829971354791264
+  },
+  {
+    "database_id": "farm",
+    "question": "Return the maximum and minimum number of cows across all farms.",
+    "expected_query": "select max(cows), min(cows) from farm;",
+    "generated_query_without_nli": "select max(cows) as maximum_cows, min(cows) as minimum_cows from farm;",
+    "generated_query_with_nli": "select max(cows) as maximum_cows, min(cows) as minimum_cows from farm;",
+    "score_without_nli": 0.897069597069597,
+    "score_with_nli": 0.9390250199974488
+  },
+  {
+    "database_id": "farm",
+    "question": "How many different statuses do cities have?",
+    "expected_query": "select count(distinct status) from city;",
+    "generated_query_without_nli": "select count(distinct status) as different_statuses from city;",
+    "generated_query_with_nli": "select count(distinct status) as different_statuses from city;",
+    "score_without_nli": 0.9193413729128015,
+    "score_with_nli": 0.9611787637433984
+  },
+  {
+    "database_id": "farm",
+    "question": "Count the number of different statuses.",
+    "expected_query": "select count(distinct status) from city;",
+    "generated_query_without_nli": "select count(distinct status) as numberofdifferentstatuses from city;",
+    "generated_query_with_nli": "select count(distinct status) as numberofdifferentstatuses from city;",
+    "score_without_nli": 0.9193413729128015,
+    "score_with_nli": 0.9624499835056122
+  },
+  {
+    "database_id": "farm",
+    "question": "List official names of cities in descending order of population.",
+    "expected_query": "select official_name from city order by population desc;",
+    "generated_query_without_nli": "select official_name from city order by population desc;",
+    "generated_query_with_nli": "select official_name from city order by population desc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the official names of cities, ordered descending by population?",
+    "expected_query": "select official_name from city order by population desc;",
+    "generated_query_without_nli": "select official_name from city order by population desc;",
+    "generated_query_with_nli": "select official_name from city order by population desc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "Show the years and the official names of the host cities of competitions.",
+    "expected_query": "select t2.year, t1.official_name from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id;",
+    "generated_query_without_nli": "select fc.year, c.official_name from farm_competition fc join city c on fc.host_city_id = c.city_id;",
+    "generated_query_with_nli": "select fc.year, c.official_name from farm_competition fc join city c on fc.host_city_id = c.city_id;",
+    "score_without_nli": 0.4864083285135917,
+    "score_with_nli": 0.5239131604754702
+  },
+  {
+    "database_id": "farm",
+    "question": "Give the years and official names of the cities of each competition.",
+    "expected_query": "select t2.year, t1.official_name from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id;",
+    "generated_query_without_nli": "select fc.year, c.official_name from farm_competition fc join city c on fc.host_city_id = c.city_id;",
+    "generated_query_with_nli": "select fc.year, c.official_name from farm_competition fc join city c on fc.host_city_id = c.city_id;",
+    "score_without_nli": 0.4864083285135917,
+    "score_with_nli": 0.5730065995309076
+  },
+  {
+    "database_id": "farm",
+    "question": "Show the official names of the cities that have hosted more than one competition.",
+    "expected_query": "select t1.official_name from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id group by t2.host_city_id having count(*) > 1;",
+    "generated_query_without_nli": "select c.official_name from city c join farm_competition fc on c.city_id = fc.host_city_id group by c.official_name having count(fc.competition_id) > 1;",
+    "generated_query_with_nli": "select c.official_name from city c join farm_competition fc on c.city_id = fc.host_city_id group by c.official_name having count(fc.competition_id) > 1;",
+    "score_without_nli": 0.5008335414585414,
+    "score_with_nli": 0.5828933557893111
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the official names of cities that have hosted more than one competition?",
+    "expected_query": "select t1.official_name from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id group by t2.host_city_id having count(*) > 1;",
+    "generated_query_without_nli": "select c.official_name from city c join farm_competition fc on c.city_id = fc.host_city_id group by c.official_name having count(fc.competition_id) > 1;",
+    "generated_query_with_nli": "select c.official_name from city c join farm_competition fc on c.city_id = fc.host_city_id group by c.official_name having count(fc.competition_id) > 1;",
+    "score_without_nli": 0.5008335414585414,
+    "score_with_nli": 0.5696370663638287
+  },
+  {
+    "database_id": "farm",
+    "question": "What is the most common status across all cities?",
+    "expected_query": "select status from city group by status order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select status from city group by status order by count(*) desc limit 1;",
+    "generated_query_with_nli": "select status from city group by status order by count(*) desc limit 1;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "farm",
+    "question": "List the most common type of Status across cities.",
+    "expected_query": "select status from city group by status order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select status from city group by status order by count(*) desc limit 1;",
+    "generated_query_with_nli": "select status from city group by status order by count(*) desc fetch first 1 row only;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 0.9236259401984841
+  },
+  {
+    "database_id": "farm",
+    "question": "Return the different statuses of cities, ascending by frequency.",
+    "expected_query": "select status from city group by status order by count(*) asc;",
+    "generated_query_without_nli": "select status, count(*) as frequency from city group by status order by frequency asc;",
+    "generated_query_with_nli": "select status, count(*) as frequency from city group by status order by frequency asc;",
+    "score_without_nli": 0.7932397959183674,
+    "score_with_nli": 0.8519994581568937
+  },
+  {
+    "database_id": "farm",
+    "question": "Please show the different statuses, ordered by the number of cities that have each.",
+    "expected_query": "select status from city group by status order by count(*) asc;",
+    "generated_query_without_nli": "select status, count(*) as number_of_cities from city group by status order by number_of_cities desc;",
+    "generated_query_with_nli": "select status, count(*) as number_of_cities from city group by status order by number_of_cities desc;",
+    "score_without_nli": 0.7427083333333333,
+    "score_with_nli": 0.7580554734606822
+  },
+  {
+    "database_id": "farm",
+    "question": "Please show the themes of competitions with host cities having populations larger than 1000.",
+    "expected_query": "select t2.theme from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id where t1.population > 1000;",
+    "generated_query_without_nli": "select distinct fc.theme from farm_competition fc join city c on fc.host_city_id = c.city_id where c.population > 1000;",
+    "generated_query_with_nli": "select distinct fc.theme from farm_competition fc join city c on fc.host_city_id = c.city_id where c.population > 1000;",
+    "score_without_nli": 0.4757133814074515,
+    "score_with_nli": 0.4891137037544539
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the themes of competitions that have corresponding host cities with more than 1000 residents?",
+    "expected_query": "select t2.theme from city as t1 join farm_competition as t2 on t1.city_id = t2.host_city_id where t1.population > 1000;",
+    "generated_query_without_nli": "select distinct fc.theme from farm_competition fc join city c on fc.host_city_id = c.city_id where c.population > 1000;",
+    "generated_query_with_nli": "select distinct fc.theme from farm_competition fc join city c on fc.host_city_id = c.city_id where c.population > 1000;",
+    "score_without_nli": 0.4757133814074515,
+    "score_with_nli": 0.49825216841024855
+  },
+  {
+    "database_id": "farm",
+    "question": "Please show the different statuses of cities and the average population of cities with each status.",
+    "expected_query": "select status, avg(population) from city group by status;",
+    "generated_query_without_nli": "select status, avg(population) as average_population from city group by status;",
+    "generated_query_with_nli": "select status, avg(population) as average_population from city group by status;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 0.9921783892541678
+  },
+  {
+    "database_id": "farm",
+    "question": "What are the statuses and average populations of each city?",
+    "expected_query": "select status, avg(population) from city group by status;",
+    "generated_query_without_nli": "select status, avg(population) as average_population from city group by status;",
+    "generated_query_with_nli": "select status, avg(population) as average_population from city group by status;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "architecture",
+    "question": "What is the average length in feet of the bridges?",
+    "expected_query": "select avg(length_feet) from bridge;",
+    "generated_query_without_nli": "select avg(length_feet) as average_length_feet from bridge;",
+    "generated_query_with_nli": "select avg(length_feet) as average_length_feet from bridge;",
+    "score_without_nli": 0.9103174603174603,
+    "score_with_nli": 0.9822673297411727
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the names and year of construction for the mills of 'Grondzeiler' type?",
+    "expected_query": "select name, built_year from mill where type = 'grondzeiler';",
+    "generated_query_without_nli": "select name, built_year from mill where type = 'grondzeiler';",
+    "generated_query_with_nli": "select name, built_year from mill where type = 'grondzeiler';",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the distinct names and nationalities of the architects who have ever built a mill?",
+    "expected_query": "select distinct t1.name, t1.nationality from architect as t1 join mill as t2 on t1.id = t2.architect_id;",
+    "generated_query_without_nli": "select distinct a.name, a.nationality from architect a join mill m on a.id = m.architect_id;",
+    "generated_query_with_nli": "select distinct a.name, a.nationality from architect a join mill m on a.id = m.architect_id::text;",
+    "score_without_nli": 0.5656292517006802,
+    "score_with_nli": 0.6359506300850817
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the names of the mills which are not located in 'Donceel'?",
+    "expected_query": "select name from mill where location!= 'donceel';",
+    "generated_query_without_nli": "select name from mill where location <> 'donceel';",
+    "generated_query_with_nli": "select name from mill where location <> 'donceel';",
+    "score_without_nli": 0.9079365079365079,
+    "score_with_nli": 0.9216937423979115
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the distinct types of mills that are built by American or Canadian architects?",
+    "expected_query": "select distinct t1.type from mill as t1 join architect as t2 on t1.architect_id = t2.id where t2.nationality = 'american' or t2.nationality = 'canadian';",
+    "generated_query_without_nli": "select distinct m.type from mill m join architect a on m.architect_id = a.id where a.nationality in ('american', 'canadian');",
+    "generated_query_with_nli": "select distinct m.type from mill m join architect a on m.architect_id = a.id where a.nationality in ('american', 'canadian');",
+    "score_without_nli": 0.4843741906241906,
+    "score_with_nli": 0.5471679495239523
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the ids and names of the architects who built at least 3 bridges ?",
+    "expected_query": "select t1.id, t1.name from architect as t1 join bridge as t2 on t1.id = t2.architect_id group by t1.id having count(*) >= 3;",
+    "generated_query_without_nli": "select a.id, a.name from architect a join bridge b on a.id = b.architect_id group by a.id, a.name having count(b.id) >= 3;",
+    "generated_query_with_nli": "select a.id, a.name from architect a join bridge b on a.id = cast(b.architect_id as text) group by a.id, a.name having count(b.id) >= 3;",
+    "score_without_nli": 0.5203408433671591,
+    "score_with_nli": 0.5694266892436681
+  },
+  {
+    "database_id": "architecture",
+    "question": "What is the id, name and nationality of the architect who built most mills?",
+    "expected_query": "select t1.id, t1.name, t1.nationality from architect as t1 join mill as t2 on t1.id = t2.architect_id group by t1.id order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select a.id, a.name, a.nationality from architect a join mill m on a.id = m.architect_id group by a.id, a.name, a.nationality order by count(m.id) desc limit 1;",
+    "generated_query_with_nli": "select a.id, a.name, a.nationality from architect a join mill m on a.id = cast(m.architect_id as text) group by a.id, a.name, a.nationality order by count(m.id) desc limit 1;",
+    "score_without_nli": 0.5213744588744589,
+    "score_with_nli": 0.5253849622365743
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the ids, names and genders of the architects who built two bridges or one mill?",
+    "expected_query": "select t1.id, t1.name, t1.gender from architect as t1 join bridge as t2 on t1.id = t2.architect_id group by t1.id having count(*) = 2 union select t1.id, t1.name, t1.gender from architect as t1 join mill as t2 on t1.id = t2.architect_id group by t1.id having count(*) = 1;",
+    "generated_query_without_nli": "select a.id, a.name, a.gender from architect a left join bridge b on a.id = b.architect_id left join mill m on a.id = m.architect_id group by a.id, a.name, a.gender having count(b.id) >= 2 or count(m.id) = 1;",
+    "generated_query_with_nli": "select a.id, a.name, a.gender from architect a left join bridge b on a.id = cast(b.architect_id as text) left join mill m on a.id = cast(m.architect_id as text) group by a.id, a.name, a.gender having count(b.id) >= 2 or count(m.id) = 1;",
+    "score_without_nli": 0.39355956141670423,
+    "score_with_nli": 0.4150922230367599
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are all the company names that have a book published by Alyson?",
+    "expected_query": "select t1.company_name from culture_company as t1 join book_club as t2 on t1.book_club_id = t2.book_club_id where t2.publisher = 'alyson';",
+    "generated_query_without_nli": "select distinct cc.company_name from culture_company cc join book_club bc on cc.book_club_id = bc.book_club_id where bc.author_or_editor = 'alyson';",
+    "generated_query_with_nli": "select distinct cc.company_name from culture_company cc join book_club bc on cc.book_club_id = bc.book_club_id where bc.author_or_editor = 'alyson';",
+    "score_without_nli": 0.4906446540880503,
+    "score_with_nli": 0.5149857160227639
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show the movie titles and book titles for all companies in China.",
+    "expected_query": "select t1.title, t3.book_title from movie as t1 join culture_company as t2 on t1.movie_id = t2.movie_id join book_club as t3 on t3.book_club_id = t2.book_club_id where t2.incorporated_in = 'china';",
+    "generated_query_without_nli": "select m.title as movie_title, b.book_title from culture_company c join movie m on c.movie_id = m.movie_id join book_club b on c.book_club_id = b.book_club_id where c.incorporated_in = 'china';",
+    "generated_query_with_nli": "select m.title as movie_title, b.book_title from culture_company c join movie m on c.movie_id = m.movie_id join book_club b on c.book_club_id = b.book_club_id where c.incorporated_in = 'china';",
+    "score_without_nli": 0.5086226798411673,
+    "score_with_nli": 0.5818593842843084
+  },
+  {
+    "database_id": "architecture",
+    "question": "What is the location of the bridge named 'Kolob Arch' or 'Rainbow Bridge'?",
+    "expected_query": "select location from bridge where name = 'kolob arch' or name = 'rainbow bridge';",
+    "generated_query_without_nli": "select location from bridge where name in ('kolob arch', 'rainbow bridge');",
+    "generated_query_with_nli": "select location from bridge where name in ('kolob arch', 'rainbow bridge');",
+    "score_without_nli": 0.8016483516483517,
+    "score_with_nli": 0.8697315225954498
+  },
+  {
+    "database_id": "architecture",
+    "question": "Which of the mill names contains the french word 'Moulin'?",
+    "expected_query": "select name from mill where name like '%moulin%';",
+    "generated_query_without_nli": "select name from mill where name like '%moulin%';",
+    "generated_query_with_nli": "select name from mill where name like '%moulin%';",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "architecture",
+    "question": "What are the distinct name of the mills built by the architects who have also built a bridge longer than 80 meters?",
+    "expected_query": "select distinct t1.name from mill as t1 join architect as t2 on t1.architect_id = t2.id join bridge as t3 on t3.architect_id = t2.id where t3.length_meters > 80;",
+    "generated_query_without_nli": "select distinct m.name from mill m where m.architect_id in ( select b.architect_id from bridge b where b.length_meters > 80 );",
+    "generated_query_with_nli": "select distinct m.name from mill m where m.architect_id in ( select b.architect_id from bridge b where b.length_meters > 80 );",
+    "score_without_nli": 0.3795947122810477,
+    "score_with_nli": 0.4262068482488437
+  },
+  {
+    "database_id": "architecture",
+    "question": "What is the most common mill type, and how many are there?",
+    "expected_query": "select type, count(*) from mill group by type order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select type, count(*) as count from mill group by type order by count desc limit 1;",
+    "generated_query_with_nli": "select type, count(*) as count from mill group by type order by count desc limit 1;",
+    "score_without_nli": 0.8969465991524815,
+    "score_with_nli": 0.9362762876889735
+  },
+  {
+    "database_id": "architecture",
+    "question": "How many architects haven't built a mill before year 1850?",
+    "expected_query": "select count(*) from architect where id not in ( select architect_id from mill where built_year < 1850 );",
+    "generated_query_without_nli": "select count(*) from architect where id not in ( select architect_id from mill where built_year < 1850 );",
+    "generated_query_with_nli": "select count(*) from architect where id not in ( select architect_id from mill where built_year < 1850 );",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "architecture",
+    "question": "show the name of all bridges that was designed by american archtect, and sort the result by the bridge feet length.",
+    "expected_query": "select t1.name from bridge as t1 join architect as t2 on t1.architect_id = t2.id where t2.nationality = 'american' order by t1.length_feet;",
+    "generated_query_without_nli": "select b.name from bridge b join architect a on b.architect_id = a.id where a.nationality = 'american' order by b.length_feet;",
+    "generated_query_with_nli": "select b.name from bridge b join architect a on b.architect_id = cast(a.id as numeric) where a.nationality = 'american' order by b.length_feet;",
+    "score_without_nli": 0.5394480519480519,
+    "score_with_nli": 0.5683412246569687
+  },
+  {
+    "database_id": "culture_company",
+    "question": "How many book clubs are there?",
+    "expected_query": "select count(*) from book_club;",
+    "generated_query_without_nli": "select count(distinct book_club_id) as number_of_book_clubs from book_club;",
+    "generated_query_with_nli": "select count(distinct book_club_id) as number_of_book_clubs from book_club;",
+    "score_without_nli": 0.8077224310776943,
+    "score_with_nli": 0.8196819255720912
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Count the number of book clubs.",
+    "expected_query": "select count(*) from book_club;",
+    "generated_query_without_nli": "select count(distinct book_club_id) as number_of_book_clubs from book_club;",
+    "generated_query_with_nli": "select count(distinct book_club_id) as number_of_book_clubs from book_club;",
+    "score_without_nli": 0.8077224310776943,
+    "score_with_nli": 0.8510101619971303
+  },
+  {
+    "database_id": "culture_company",
+    "question": "show the titles, and authors or editors for all books made after the year 1989.",
+    "expected_query": "select book_title, author_or_editor from book_club where year > 1989;",
+    "generated_query_without_nli": "select book_title, author_or_editor from book_club where year > 1989;",
+    "generated_query_with_nli": "select book_title, author_or_editor from book_club where year > 1989;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are the titles and authors or editors that correspond to books made after 1989?",
+    "expected_query": "select book_title, author_or_editor from book_club where year > 1989;",
+    "generated_query_without_nli": "select book_title, author_or_editor from book_club where year > 1989;",
+    "generated_query_with_nli": "select book_title, author_or_editor from book_club where year > 1989;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all distinct publishers for books.",
+    "expected_query": "select distinct publisher from book_club;",
+    "generated_query_without_nli": "select distinct publisher from book_club;",
+    "generated_query_with_nli": "select distinct publisher from book_club;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are all the different book publishers?",
+    "expected_query": "select distinct publisher from book_club;",
+    "generated_query_without_nli": "select distinct publisher from book_club;",
+    "generated_query_with_nli": "select distinct publisher from book_club;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show the years, book titles, and publishers for all books, in descending order by year.",
+    "expected_query": "select year, book_title, publisher from book_club order by year desc;",
+    "generated_query_without_nli": "select year, book_title, publisher from book_club order by year desc;",
+    "generated_query_with_nli": "select year, book_title, publisher from book_club order by year desc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are the years, titles, and publishers for all books, ordered by year descending?",
+    "expected_query": "select year, book_title, publisher from book_club order by year desc;",
+    "generated_query_without_nli": "select year, book_title, publisher from book_club order by year desc;",
+    "generated_query_with_nli": "select year, book_title, publisher from book_club order by year desc;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all publishers and the number of books for each publisher.",
+    "expected_query": "select publisher, count(*) from book_club group by publisher;",
+    "generated_query_without_nli": "select publisher, count(*) as number_of_books from book_club group by publisher;",
+    "generated_query_with_nli": "select publisher, count(*) as number_of_books from book_club group by publisher;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "How many books are there for each publisher?",
+    "expected_query": "select publisher, count(*) from book_club group by publisher;",
+    "generated_query_without_nli": "select publisher, count(*) as number_of_books from book_club group by publisher;",
+    "generated_query_with_nli": "select publisher, count(*) as number_of_books from book_club group by publisher;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What is the publisher with most number of books?",
+    "expected_query": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "generated_query_with_nli": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Return the publisher that has published the most books.",
+    "expected_query": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "generated_query_without_nli": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "generated_query_with_nli": "select publisher from book_club group by publisher order by count(*) desc limit 1;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all book categories and the number of books in each category.",
+    "expected_query": "select category, count(*) from book_club group by category;",
+    "generated_query_without_nli": "select category, count(*) as number_of_books from book_club group by category;",
+    "generated_query_with_nli": "select category, count(*) as number_of_books from book_club group by category;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 0.9861802192137676
+  },
+  {
+    "database_id": "culture_company",
+    "question": "How many books fall into each category?",
+    "expected_query": "select category, count(*) from book_club group by category;",
+    "generated_query_without_nli": "select category, count(*) as book_count from book_club group by category;",
+    "generated_query_with_nli": "select category, count(*) as book_count from book_club group by category;",
+    "score_without_nli": 0.9333791208791209,
+    "score_with_nli": 0.9974281710382845
+  },
+  {
+    "database_id": "culture_company",
+    "question": "List categories that have at least two books after year 1989.",
+    "expected_query": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "generated_query_without_nli": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "generated_query_with_nli": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What categories have two or more corresponding books that were made after 1989?",
+    "expected_query": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "generated_query_without_nli": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "generated_query_with_nli": "select category from book_club where year > 1989 group by category having count(*) >= 2;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show publishers with a book published in 1989 and a book in 1990.",
+    "expected_query": "select publisher from book_club where year = 1989 intersect select publisher from book_club where year = 1990;",
+    "generated_query_without_nli": "select distinct b1.publisher from book_club b1 join book_club b2 on b1.publisher = b2.publisher where b1.year = 1989 and b2.year = 1990;",
+    "generated_query_with_nli": "select distinct b1.publisher from book_club b1 join book_club b2 on b1.publisher = b2.publisher where b1.year = 1989 and b2.year = 1990;",
+    "score_without_nli": 0.36533663704716335,
+    "score_with_nli": 0.4367204989399923
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are the publishers who have published a book in both 1989 and 1990?",
+    "expected_query": "select publisher from book_club where year = 1989 intersect select publisher from book_club where year = 1990;",
+    "generated_query_without_nli": "select distinct publisher from book_club where year in (1989, 1990) group by publisher having count(distinct year) = 2;",
+    "generated_query_with_nli": "select distinct publisher from book_club where year in (1989, 1990) group by publisher having count(distinct year) = 2;",
+    "score_without_nli": 0.6059523809523809,
+    "score_with_nli": 0.6922842524278949
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all movie titles, years, and directors, ordered by budget.",
+    "expected_query": "select title, year, director from movie order by budget_million;",
+    "generated_query_without_nli": "select title, year, director from movie order by budget_million;",
+    "generated_query_with_nli": "select title, year, director from movie order by budget_million;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are the titles, years, and directors of all movies, ordered by budget in millions?",
+    "expected_query": "select title, year, director from movie order by budget_million;",
+    "generated_query_without_nli": "select title, year, director from movie order by budget_million;",
+    "generated_query_with_nli": "select title, year, director from movie order by budget_million;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "How many movie directors are there?",
+    "expected_query": "select count (distinct director) from movie;",
+    "generated_query_without_nli": "select count(distinct director) as number_of_directors from movie;",
+    "generated_query_with_nli": "select count(distinct director) as number_of_directors from movie;",
+    "score_without_nli": 0.8488095238095239,
+    "score_with_nli": 0.9443438238890665
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What are all company names that have a corresponding movie directed in the year 1999?",
+    "expected_query": "select t2.company_name from movie as t1 join culture_company as t2 on t1.movie_id = t2.movie_id where t1.year = 1999;",
+    "generated_query_without_nli": "select distinct c.company_name from culture_company c join movie m on c.movie_id = m.movie_id where m.year = 1999;",
+    "generated_query_with_nli": "select distinct c.company_name from culture_company c join movie m on c.movie_id = m.movie_id where m.year = 1999;",
+    "score_without_nli": 0.4953031469877831,
+    "score_with_nli": 0.5528995750248568
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Count the number of different directors.",
+    "expected_query": "select count (distinct director) from movie;",
+    "generated_query_without_nli": "select count(distinct director) as different_directors from movie;",
+    "generated_query_with_nli": "select count(distinct director) as different_directors from movie;",
+    "score_without_nli": 0.8488095238095239,
+    "score_with_nli": 0.8728695429617886
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What is the title and director for the movie with highest worldwide gross in the year 2000 or before?",
+    "expected_query": "select title, director from movie where year <= 2000 order by gross_worldwide desc limit 1;",
+    "generated_query_without_nli": "select title, director from movie where year <= 2000 order by gross_worldwide desc limit 1;",
+    "generated_query_with_nli": "select title, director from movie where year <= 2000 order by gross_worldwide desc limit 1;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Return the title and director of the movie released in the year 2000 or earlier that had the highest worldwide gross.",
+    "expected_query": "select title, director from movie where year <= 2000 order by gross_worldwide desc limit 1;",
+    "generated_query_without_nli": "select title, director from movie where year <= 2000 order by gross_worldwide desc fetch first 1 row only;",
+    "generated_query_with_nli": "select title, director from movie where year <= 2000 order by gross_worldwide desc fetch first 1 row only;",
+    "score_without_nli": 0.8819444444444444,
+    "score_with_nli": 0.9350460588603601
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all director names who have a movie in both year 1999 and 2000.",
+    "expected_query": "select director from movie where year = 2000 intersect select director from movie where year = 1999;",
+    "generated_query_without_nli": "select director from movie where year in (1999, 2000) group by director having count(distinct year) = 2;",
+    "generated_query_with_nli": "select director from movie where year in (1999, 2000) group by director having count(distinct year) = 2;",
+    "score_without_nli": 0.6261324041811847,
+    "score_with_nli": 0.703493488043741
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Which directors had a movie both in the year 1999 and 2000?",
+    "expected_query": "select director from movie where year = 2000 intersect select director from movie where year = 1999;",
+    "generated_query_without_nli": "select director from movie where year in (1999, 2000) group by director having count(distinct year) = 2;",
+    "generated_query_with_nli": "select director from movie where year in (1999, 2000) group by director having count(distinct year) = 2;",
+    "score_without_nli": 0.6261324041811847,
+    "score_with_nli": 0.6398254470153036
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Show all director names who have a movie in the year 1999 or 2000.",
+    "expected_query": "select director from movie where year = 1999 or year = 2000;",
+    "generated_query_without_nli": "select distinct director from movie where year in (1999, 2000);",
+    "generated_query_with_nli": "select distinct director from movie where year in (1999, 2000);",
+    "score_without_nli": 0.7680059523809524,
+    "score_with_nli": 0.791976678294421
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Which directors had a movie in either 1999 or 2000?",
+    "expected_query": "select director from movie where year = 1999 or year = 2000;",
+    "generated_query_without_nli": "select distinct director from movie where year in (1999, 2000);",
+    "generated_query_with_nli": "select distinct director from movie where year in (1999, 2000);",
+    "score_without_nli": 0.7680059523809524,
+    "score_with_nli": 0.8411424856244418
+  },
+  {
+    "database_id": "culture_company",
+    "question": "What is the average, maximum, and minimum budget for all movies before 2000.",
+    "expected_query": "select avg(budget_million), max(budget_million), min(budget_million) from movie where year < 2000;",
+    "generated_query_without_nli": "select avg(budget_million) as average_budget, max(budget_million) as maximum_budget, min(budget_million) as minimum_budget from movie where year < 2000;",
+    "generated_query_with_nli": "select avg(budget_million) as average_budget, max(budget_million) as maximum_budget, min(budget_million) as minimum_budget from movie where year < 2000;",
+    "score_without_nli": 0.9043814080656186,
+    "score_with_nli": 0.9763319377824745
+  },
+  {
+    "database_id": "culture_company",
+    "question": "Return the average, maximum, and minimum budgets in millions for movies made before the year 2000.",
+    "expected_query": "select avg(budget_million), max(budget_million), min(budget_million) from movie where year < 2000;",
+    "generated_query_without_nli": "select avg(budget_million) as average_budget, max(budget_million) as maximum_budget, min(budget_million) as minimum_budget from movie where year < 2000;",
+    "generated_query_with_nli": "select avg(budget_million) as average_budget, max(budget_million) as maximum_budget, min(budget_million) as minimum_budget from movie where year < 2000;",
+    "score_without_nli": 0.9043814080656186,
+    "score_with_nli": 0.9952903153183612
+  },
+  {
+    "database_id": "culture_company",
+    "question": "List all company names with a book published by Alyson.",
+    "expected_query": "select t1.company_name from culture_company as t1 join book_club as t2 on t1.book_club_id = t2.book_club_id where t2.publisher = 'alyson';",
+    "generated_query_without_nli": "select distinct c.company_name from culture_company c join book_club b on c.book_club_id = b.book_club_id where b.author_or_editor = 'alyson';",
+    "generated_query_with_nli": "select distinct c.company_name from culture_company c join book_club b on c.book_club_id = b.book_club_id where b.author_or_editor = 'alyson';",
+    "score_without_nli": 0.4906446540880503,
+    "score_with_nli": 0.5557942720761987
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "What are the different cities where students live?",
+    "expected_query": "select distinct t1.city from addresses as t1 join people_addresses as t2 on t1.address_id = t2.address_id join students as t3 on t2.person_id = t3.student_id;",
+    "generated_query_without_nli": "select distinct a.city from addresses a join people_addresses pa on a.address_id = pa.address_id join students s on pa.person_id = s.student_id;",
+    "generated_query_with_nli": "select distinct a.city from addresses a join people_addresses pa on a.address_id = pa.address_id join people p on pa.person_id = p.person_id join students s on p.person_id = s.student_id;",
+    "score_without_nli": 0.5406811938061937,
+    "score_with_nli": 0.5174138401836439
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "List the names of courses in alphabetical order?",
+    "expected_query": "select course_name from courses order by course_name;",
+    "generated_query_without_nli": "select course_name from courses order by course_name;",
+    "generated_query_with_nli": "select course_name from courses order by course_name;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "What are the names of the courses in alphabetical order?",
+    "expected_query": "select course_name from courses order by course_name;",
+    "generated_query_without_nli": "select course_name from courses order by course_name;",
+    "generated_query_with_nli": "select course_name from courses order by course_name;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "List the first names of people in alphabetical order?",
+    "expected_query": "select first_name from people order by first_name;",
+    "generated_query_without_nli": "select first_name from people order by first_name asc;",
+    "generated_query_with_nli": "select first_name from people order by first_name asc;",
+    "score_without_nli": 0.9357142857142857,
+    "score_with_nli": 0.9536669156570975
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "What are the first names of the people in alphabetical order?",
+    "expected_query": "select first_name from people order by first_name;",
+    "generated_query_without_nli": "select first_name from people order by first_name;",
+    "generated_query_with_nli": "select first_name from people order by first_name;",
+    "score_without_nli": 1.0,
+    "score_with_nli": 1.0
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "What are the id of students who registered courses or attended courses?",
+    "expected_query": "select student_id from student_course_registrations union select student_id from student_course_attendance;",
+    "generated_query_without_nli": "select distinct student_id from student_course_registrations union select distinct student_id from student_course_attendance;",
+    "generated_query_with_nli": "select distinct student_id from student_course_registrations union select distinct student_id from student_course_attendance;",
+    "score_without_nli": 0.9281655844155845,
+    "score_with_nli": 0.9425071257227222
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "What are the different cities where people live?",
+    "expected_query": "select distinct t1.city from addresses as t1 join people_addresses as t2 on t1.address_id = t2.address_id;",
+    "generated_query_without_nli": "select distinct city from addresses;",
+    "generated_query_with_nli": "select distinct a.city from addresses a join people_addresses pa on a.address_id = pa.address_id join people p on pa.person_id = p.person_id;",
+    "score_without_nli": 0.3767857142857143,
+    "score_with_nli": 0.48002984212552946
+  },
+  {
+    "database_id": "student_assessment",
+    "question": "Find distinct cities of address of students?",
+    "expected_query": "select distinct t1.city from addresses as t1 join people_addresses as t2 on t1.address_id = t2.address_id join students as t3 on t2.person_id = t3.student_id;",
+    "generated_query_without_nli": "select distinct a.city from addresses a join people_addresses pa on a.address_id = pa.address_id join students s on pa.person_id = s.student_id;",
+    "generated_query_with_nli": "select distinct a.city from addresses a join people_addresses pa on a.address_id = pa.address_id join students s on pa.person_id = s.person_id;",
+    "score_without_nli": 0.5406811938061937,
+    "score_with_nli": 0.5921867551570087
+  }
+]

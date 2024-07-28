@@ -1,0 +1,39 @@
+Database ID: culture_company
+Question: Show all distinct publishers for books.
+SQL Query: SELECT DISTINCT publisher FROM book_club
+
+Database ID: culture_company
+Question: What are all the different book publishers?
+SQL Query: SELECT DISTINCT publisher FROM book_club
+
+Database ID: culture_company
+Question: Show the years, book titles, and publishers for all books, in descending order by year.
+SQL Query: SELECT YEAR ,  book_title ,  publisher FROM book_club ORDER BY YEAR DESC
+
+Database ID: culture_company
+Question: What are the years, titles, and publishers for all books, ordered by year descending?
+SQL Query: SELECT YEAR ,  book_title ,  publisher FROM book_club ORDER BY YEAR DESC
+
+Database ID: culture_company
+Question: Show all publishers and the number of books for each publisher.
+SQL Query: SELECT publisher ,  count(*) FROM book_club GROUP BY publisher
+
+Database ID: culture_company
+Question: How many books are there for each publisher?
+SQL Query: SELECT publisher ,  count(*) FROM book_club GROUP BY publisher
+
+Database ID: culture_company
+Question: What is the publisher with most number of books?
+SQL Query: SELECT publisher FROM book_club GROUP BY publisher ORDER BY count(*) DESC LIMIT 1
+
+Database ID: culture_company
+Question: Return the publisher that has published the most books.
+SQL Query: SELECT publisher FROM book_club GROUP BY publisher ORDER BY count(*) DESC LIMIT 1
+
+Database ID: culture_company
+Question: Show all book categories and the number of books in each category.
+SQL Query: SELECT category ,  count(*) FROM book_club GROUP BY category
+
+Database ID: culture_company
+Question: How many books fall into each category?
+SQL Query: SELECT category ,  count(*) FROM book_club GROUP BY category

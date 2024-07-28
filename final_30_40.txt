@@ -1,0 +1,31 @@
+Database ID: farm
+Question: Show the years and the official names of the host cities of competitions.
+SQL Query: SELECT T2.Year ,  T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID
+
+Database ID: farm
+Question: Give the years and official names of the cities of each competition.
+SQL Query: SELECT T2.Year ,  T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID
+
+Database ID: farm
+Question: Show the official names of the cities that have hosted more than one competition.
+SQL Query: SELECT T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID GROUP BY T2.Host_city_ID HAVING COUNT(*)  >  1
+
+Database ID: farm
+Question: What are the official names of cities that have hosted more than one competition?
+SQL Query: SELECT T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID GROUP BY T2.Host_city_ID HAVING COUNT(*)  >  1
+
+Database ID: farm
+Question: What is the most common status across all cities?
+SQL Query: SELECT Status FROM city GROUP BY Status ORDER BY COUNT(*) DESC LIMIT 1
+
+Database ID: farm
+Question: List the most common type of Status across cities.
+SQL Query: SELECT Status FROM city GROUP BY Status ORDER BY COUNT(*) DESC LIMIT 1
+
+Database ID: farm
+Question: Return the different statuses of cities, ascending by frequency.
+SQL Query: SELECT Status FROM city GROUP BY Status ORDER BY COUNT(*) ASC
+
+Database ID: farm
+Question: Please show the different statuses, ordered by the number of cities that have each.
+SQL Query: SELECT Status FROM city GROUP BY Status ORDER BY COUNT(*) ASC

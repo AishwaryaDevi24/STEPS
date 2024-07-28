@@ -1,0 +1,43 @@
+Database ID: architecture
+Question: What is the average length in feet of the bridges?
+SQL Query: SELECT avg(length_feet) FROM bridge
+
+Database ID: architecture
+Question: What are the names and year of construction for the mills of 'Grondzeiler' type?
+SQL Query: SELECT name ,  built_year FROM mill WHERE TYPE  =  'Grondzeiler'
+
+Database ID: architecture
+Question: What are the distinct names and nationalities of the architects who have ever built a mill?
+SQL Query: SELECT DISTINCT T1.name ,  T1.nationality FROM architect AS T1 JOIN mill AS t2 ON T1.id  =  T2.architect_id
+
+Database ID: architecture
+Question: What are the names of the mills which are not located in 'Donceel'?
+SQL Query: SELECT name FROM mill WHERE LOCATION != 'Donceel'
+
+Database ID: architecture
+Question: What are the distinct types of mills that are built by American or Canadian architects?
+SQL Query: SELECT DISTINCT T1.type FROM mill AS T1 JOIN architect AS t2 ON T1.architect_id  =  T2.id WHERE T2.nationality  =  'American' OR T2.nationality  =  'Canadian'
+
+Database ID: architecture
+Question: What are the ids and names of the architects who built at least 3 bridges ?
+SQL Query: SELECT T1.id ,  T1.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  >=  3
+
+Database ID: architecture
+Question: What is the id, name and nationality of the architect who built most mills?
+SQL Query: SELECT T1.id ,  T1.name ,  T1.nationality FROM architect AS T1 JOIN mill AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1
+
+Database ID: architecture
+Question: What are the ids, names and genders of the architects who built two bridges or one mill?
+SQL Query: SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN bridge AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  2 UNION SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN mill AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  1
+
+Database ID: culture_company
+Question: What are all the company names that have a book published by Alyson?
+SQL Query: SELECT T1.company_name FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id  =  T2.book_club_id WHERE T2.publisher  =  'Alyson'
+
+Database ID: culture_company
+Question: Show the movie titles and book titles for all companies in China.
+SQL Query: SELECT T1.title ,  T3.book_title FROM movie AS T1 JOIN culture_company AS T2 ON T1.movie_id  =  T2.movie_id JOIN book_club AS T3 ON T3.book_club_id  =  T2.book_club_id WHERE T2.incorporated_in  =  'China'
+
+Database ID: culture_company
+Question: Show all company names with a movie directed in year 1999.
+SQL Query: SELECT T2.company_name FROM movie AS T1 JOIN culture_company AS T2 ON T1.movie_id  =  T2.movie_id WHERE T1.year  =  1999

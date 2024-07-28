@@ -1,0 +1,39 @@
+Database ID: architecture
+Question: What is the location of the bridge named 'Kolob Arch' or 'Rainbow Bridge'?
+SQL Query: SELECT LOCATION FROM bridge WHERE name  =  'Kolob Arch' OR name  =  'Rainbow Bridge'
+
+Database ID: architecture
+Question: Which of the mill names contains the french word 'Moulin'?
+SQL Query: SELECT name FROM mill WHERE name LIKE '%Moulin%'
+
+Database ID: architecture
+Question: What are the distinct name of the mills built by the architects who have also built a bridge longer than 80 meters?
+SQL Query: SELECT DISTINCT T1.name FROM mill AS T1 JOIN architect AS t2 ON T1.architect_id  =  T2.id JOIN bridge AS T3 ON T3.architect_id  =  T2.id WHERE T3.length_meters  >  80
+
+Database ID: architecture
+Question: What is the most common mill type, and how many are there?
+SQL Query: SELECT TYPE ,  count(*) FROM mill GROUP BY TYPE ORDER BY count(*) DESC LIMIT 1
+
+Database ID: architecture
+Question: How many architects haven't built a mill before year 1850?
+SQL Query: SELECT count(*) FROM architect WHERE id NOT IN ( SELECT architect_id FROM mill WHERE built_year  <  1850 );
+
+Database ID: architecture
+Question: show the name of all bridges that was designed by american archtect, and sort the result by the bridge feet length.
+SQL Query: SELECT t1.name FROM bridge AS t1 JOIN architect AS t2 ON t1.architect_id  =  t2.id WHERE t2.nationality  =  'American' ORDER BY t1.length_feet
+
+Database ID: culture_company
+Question: How many book clubs are there?
+SQL Query: SELECT count(*) FROM book_club
+
+Database ID: culture_company
+Question: Count the number of book clubs.
+SQL Query: SELECT count(*) FROM book_club
+
+Database ID: culture_company
+Question: show the titles, and authors or editors for all books made after the year 1989.
+SQL Query: SELECT book_title ,  author_or_editor FROM book_club WHERE YEAR  >  1989
+
+Database ID: culture_company
+Question: What are the titles and authors or editors that correspond to books made after 1989?
+SQL Query: SELECT book_title ,  author_or_editor FROM book_club WHERE YEAR  >  1989

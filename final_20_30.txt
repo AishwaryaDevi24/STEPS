@@ -1,0 +1,39 @@
+Database ID: farm
+Question: What are the hosts of competitions whose theme is not "Aliens"?
+SQL Query: SELECT Hosts FROM farm_competition WHERE Theme !=  'Aliens'
+
+Database ID: farm
+Question: Return the hosts of competitions for which the theme is not Aliens?
+SQL Query: SELECT Hosts FROM farm_competition WHERE Theme !=  'Aliens'
+
+Database ID: farm
+Question: What are the themes of farm competitions sorted by year in ascending order?
+SQL Query: SELECT Theme FROM farm_competition ORDER BY YEAR ASC
+
+Database ID: farm
+Question: Return the themes of farm competitions, sorted by year ascending.
+SQL Query: SELECT Theme FROM farm_competition ORDER BY YEAR ASC
+
+Database ID: farm
+Question: What is the average number of working horses of farms with more than 5000 total number of horses?
+SQL Query: SELECT avg(Working_Horses) FROM farm WHERE Total_Horses  >  5000
+
+Database ID: farm
+Question: Give the average number of working horses on farms with more than 5000 total horses.
+SQL Query: SELECT avg(Working_Horses) FROM farm WHERE Total_Horses  >  5000
+
+Database ID: farm
+Question: What are the maximum and minimum number of cows across all farms.
+SQL Query: SELECT max(Cows) ,  min(Cows) FROM farm
+
+Database ID: farm
+Question: Return the maximum and minimum number of cows across all farms.
+SQL Query: SELECT max(Cows) ,  min(Cows) FROM farm
+
+Database ID: farm
+Question: How many different statuses do cities have?
+SQL Query: SELECT count(DISTINCT Status) FROM city
+
+Database ID: farm
+Question: Count the number of different statuses.
+SQL Query: SELECT count(DISTINCT Status) FROM city

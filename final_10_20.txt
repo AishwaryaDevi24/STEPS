@@ -1,0 +1,39 @@
+Database ID: department_management
+Question: How many acting statuses are there?
+SQL Query: SELECT count(DISTINCT temporary_acting) FROM management
+
+Database ID: department_management
+Question: How many departments are led by heads who are not mentioned?
+SQL Query: SELECT count(*) FROM department WHERE department_id NOT IN (SELECT department_id FROM management);
+
+Database ID: department_management
+Question: What are the distinct ages of the heads who are acting?
+SQL Query: SELECT DISTINCT T1.age FROM management AS T2 JOIN head AS T1 ON T1.head_id  =  T2.head_id WHERE T2.temporary_acting  =  'Yes'
+
+Database ID: department_management
+Question: Which department has more than 1 head at a time? List the id, name and the number of heads.
+SQL Query: SELECT T1.department_id ,  T1.name ,  count(*) FROM management AS T2 JOIN department AS T1 ON T1.department_id  =  T2.department_id GROUP BY T1.department_id HAVING count(*)  >  1
+
+Database ID: department_management
+Question: Which head's name has the substring 'Ha'? List the id and name.
+SQL Query: SELECT head_id ,  name FROM head WHERE name LIKE '%Ha%'
+
+Database ID: farm
+Question: How many farms are there?
+SQL Query: SELECT count(*) FROM farm
+
+Database ID: farm
+Question: Count the number of farms.
+SQL Query: SELECT count(*) FROM farm
+
+Database ID: farm
+Question: What is the total horses record for each farm, sorted ascending?
+SQL Query: SELECT Total_Horses FROM farm ORDER BY Total_Horses ASC
+
+Database ID: farm
+Question: What are the official names of cities that have not hosted a farm competition?
+SQL Query: SELECT Official_Name FROM city WHERE City_ID NOT IN (SELECT Host_city_ID FROM farm_competition)
+
+Database ID: farm
+Question: List the official names of cities that have not held any competition.
+SQL Query: SELECT Official_Name FROM city WHERE City_ID NOT IN (SELECT Host_city_ID FROM farm_competition)
